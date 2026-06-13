@@ -1,0 +1,24 @@
+User-agent: *
+Allow: /
+Allow: /about
+Allow: /contact
+Allow: /privacy-policy
+Allow: /terms-conditions
+Allow: /refund-policy
+Allow: /shipping-policy
+
+Disallow: /admin/
+Disallow: /buyer/
+Disallow: /seller/
+Disallow: /login
+Disallow: /logout
+Disallow: /register
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /email/
+Disallow: /language/
+Disallow: /storage/
+Disallow: /files/
+Disallow: /*.env
+
+Sitemap: https://www.mandisecure.com/sitemap.xml
