@@ -21,4 +21,4 @@ Disallow: /storage/
 Disallow: /files/
 Disallow: /*.env
 
-Sitemap: https://www.mandisecure.com/sitemap.xml
+Sitemap: https://mandisecure.com/sitemap.xml

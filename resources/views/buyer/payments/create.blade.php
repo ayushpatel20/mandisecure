@@ -148,6 +148,7 @@
                                 <h6 class="fw-bold mb-3">
                                     <i class="bi bi-bank me-1 text-success"></i> Bank Account Details
                                 </h6>
+                                <div class="table-responsive">
                                 <table class="table table-sm table-borderless mb-0">
                                     <tr>
                                         <td class="text-muted small fw-semibold" style="width:45%">Account Holder</td>
@@ -166,6 +167,7 @@
                                         <td class="fw-semibold">{{ $settings['bank_name'] }}</td>
                                     </tr>
                                 </table>
+                                </div>
                                 <div class="alert alert-info py-2 small mt-3 mb-0">
                                     <i class="bi bi-info-circle me-1"></i>
                                     Transfer <strong>₹{{ number_format($order->total_amount, 2) }}</strong>

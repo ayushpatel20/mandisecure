@@ -44,7 +44,7 @@
                             font-size:2rem;font-weight:700;
                             color:{{ $user->role === 'seller' ? '#92600a' : '#1a6b3c' }}">
                     @if($user->profile_photo)
-                        <img src="{{ asset('storage/' . $user->profile_photo) }}" alt=""
+                        <img src="{{ Storage::url($user->profile_photo) }}" alt=""
                              style="width:80px;height:80px;border-radius:50%;object-fit:cover">
                     @else
                         {{ strtoupper(substr($user->name,0,1)) }}

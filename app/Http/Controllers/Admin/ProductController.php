@@ -27,7 +27,18 @@ class ProductController extends Controller
         $products   = $query->paginate(15)->withQueryString();
         $categories = Category::where('status', true)->orderBy('name')->get();
 
-        return view('admin.products.index', compact('products', 'categories'));
+        $productStats = \Illuminate\Support\Facades\DB::table('products')
+            ->selectRaw("COUNT(*) as total, SUM(status='pending') as pending, SUM(status='approved') as approved, SUM(status='rejected') as rejected")
+            ->first();
+
+        $productCounts = [
+            'all'      => $productStats->total,
+            'pending'  => $productStats->pending,
+            'approved' => $productStats->approved,
+            'rejected' => $productStats->rejected,
+        ];
+
+        return view('admin.products.index', compact('products', 'categories', 'productCounts'));
     }
 
     public function create()

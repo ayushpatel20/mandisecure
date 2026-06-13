@@ -1,6 +1,6 @@
 @extends('public.layouts.app')
 
-@section('title', __('about.page_title'))
+@section('title', __('about.page_title') !== 'about.page_title' ? __('about.page_title') : 'About Us — MandiSecure')
 @section('meta_description', 'Learn about MandiSecure — our mission to digitise India\'s agricultural supply chain, our founding story, leadership team, and core values.')
 
 @push('seo')

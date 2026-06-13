@@ -12,7 +12,8 @@
                 <span>This order was <strong>cancelled</strong>.</span>
             </div>
         @else
-            <div class="d-flex justify-content-between align-items-start position-relative px-2">
+            <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+            <div class="d-flex justify-content-between align-items-start position-relative px-2" style="min-width:320px">
 
                 {{-- Track lines --}}
                 <div class="position-absolute" style="top:16px;left:2rem;right:2rem;height:3px;background:#dee2e6;z-index:0"></div>
@@ -28,7 +29,7 @@
                         $current = $currentIndex !== false && $i === $currentIndex;
                         $stepLog = $order->statusLogs->firstWhere('status', $step);
                     @endphp
-                    <div class="d-flex flex-column align-items-center position-relative" style="z-index:2;min-width:60px">
+                    <div class="d-flex flex-column align-items-center position-relative" style="z-index:2;min-width:56px">
                         <div class="rounded-circle d-flex align-items-center justify-content-center fw-bold mb-1"
                              style="width:32px;height:32px;font-size:0.75rem;transition:background 0.3s;
                                     background:{{ $done ? '#198754' : '#dee2e6' }};
@@ -52,6 +53,7 @@
                     </div>
                 @endforeach
 
+            </div>
             </div>
         @endif
     </div>

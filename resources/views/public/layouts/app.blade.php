@@ -7,6 +7,9 @@
     <meta name="description" content="@yield('meta_description', 'MandiSecure — India\'s premier agricultural marketplace connecting verified farmers, sellers, and buyers for coconut, vegetables, fruits, masala and more.')">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="{{ url()->current() }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="{{ url('/sitemap.xml') }}">
 
     <!-- Open Graph -->
     <meta property="og:type"        content="website">

@@ -21,19 +21,19 @@
     <div class="d-flex gap-2 mb-3 flex-wrap">
         <a href="{{ route('admin.products.index') }}"
            class="btn btn-sm {{ !request('status') ? 'btn-dark' : 'btn-outline-secondary' }}">
-            All ({{ \App\Models\Product::count() }})
+            All ({{ $productCounts['all'] }})
         </a>
         <a href="{{ route('admin.products.index', ['status' => 'pending']) }}"
            class="btn btn-sm {{ request('status') === 'pending' ? 'btn-warning' : 'btn-outline-warning' }}">
-            Pending ({{ \App\Models\Product::pending()->count() }})
+            Pending ({{ $productCounts['pending'] }})
         </a>
         <a href="{{ route('admin.products.index', ['status' => 'approved']) }}"
            class="btn btn-sm {{ request('status') === 'approved' ? 'btn-success' : 'btn-outline-success' }}">
-            Approved ({{ \App\Models\Product::approved()->count() }})
+            Approved ({{ $productCounts['approved'] }})
         </a>
         <a href="{{ route('admin.products.index', ['status' => 'rejected']) }}"
            class="btn btn-sm {{ request('status') === 'rejected' ? 'btn-danger' : 'btn-outline-danger' }}">
-            Rejected ({{ \App\Models\Product::rejected()->count() }})
+            Rejected ({{ $productCounts['rejected'] }})
         </a>
     </div>
 

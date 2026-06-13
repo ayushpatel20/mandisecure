@@ -30,7 +30,7 @@
                         background:rgba(26,107,60,0.1);overflow:hidden;
                         display:flex;align-items:center;justify-content:center">
                 @if(Auth::user()->profile_photo)
-                <img src="{{ asset('storage/' . Auth::user()->profile_photo) }}"
+                <img src="{{ Storage::url(Auth::user()->profile_photo) }}"
                      alt="Profile" style="width:90px;height:90px;object-fit:cover">
                 @else
                 <span style="font-size:2.2rem;font-weight:700;color:#1a6b3c">

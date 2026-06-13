@@ -1,6 +1,6 @@
 @extends('public.layouts.app')
 
-@section('title', __('contact.page_title'))
+@section('title', __('contact.page_title') !== 'contact.page_title' ? __('contact.page_title') : 'Contact Us — MandiSecure')
 @section('meta_description', 'Contact MandiSecure for buyer or seller enquiries, partnership opportunities, or support. Reach us by phone, email, or visit our office in Mandya, Karnataka.')
 
 @push('seo')

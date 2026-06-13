@@ -112,6 +112,7 @@
 
     {{-- Items Table --}}
     <div class="section-label">Items</div>
+    <div class="table-responsive">
     <table class="table items-table border mb-0">
         <thead>
             <tr>
@@ -167,6 +168,7 @@
             </tr>
         </tfoot>
     </table>
+    </div>
 
     {{-- Footer --}}
     <div class="footer-note">
