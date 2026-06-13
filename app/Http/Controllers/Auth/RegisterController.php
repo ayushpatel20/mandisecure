@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Services\OtpService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 
 class RegisterController extends Controller
@@ -39,7 +40,7 @@ class RegisterController extends Controller
             'name'     => $data['name'],
             'mobile'   => $data['mobile'],
             'email'    => $data['email'],
-            'password' => $data['password'],
+            'password' => Hash::make($data['password']),
         ]]);
 
         return redirect()->route('otp.verify.show');
@@ -74,7 +75,7 @@ class RegisterController extends Controller
             'gst_number'    => $data['gst_number'] ?? null,
             'mobile'        => $data['mobile'],
             'email'         => $data['email'],
-            'password'      => $data['password'],
+            'password'      => Hash::make($data['password']),
         ]]);
 
         return redirect()->route('otp.verify.show');

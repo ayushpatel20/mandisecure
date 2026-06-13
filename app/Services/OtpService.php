@@ -61,6 +61,10 @@ class OtpService
         }
 
         if (!hash_equals($otp->code, hash('sha256', $inputCode))) {
+            $otp->increment('failed_attempts');
+            if ($otp->failed_attempts >= 3) {
+                $otp->update(['used' => true]);
+            }
             return false;
         }
 

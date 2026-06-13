@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Services\OtpService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class OtpController extends Controller
 {
@@ -47,22 +48,35 @@ class OtpController extends Controller
             return back()->withErrors(['code' => 'Invalid or expired OTP. Please try again.']);
         }
 
-        // OTP verified — create the account now.
-        $userData = [
-            'name'     => $pending['name'],
-            'mobile'   => $pending['mobile'],
-            'email'    => $pending['email'],
-            'password' => $pending['password'],
-            'role'     => $pending['type'],
-            'status'   => $pending['type'] === 'buyer' ? 'active' : 'pending',
+        // VULN-3: Whitelist role — reject anything other than buyer/seller.
+        $allowedRoles = ['buyer', 'seller'];
+        if (!in_array($pending['type'], $allowedRoles, true)) {
+            session()->forget('pending_registration');
+            return redirect()->route('register')
+                ->withErrors(['mobile' => 'Invalid registration type. Please register again.']);
+        }
+        $allowedRole = $pending['type'];
+
+        // VULN-1: Password is already bcrypt-hashed in session.
+        // Use DB::table() to bypass the User model's `hashed` cast (which would double-hash).
+        $insert = [
+            'name'       => $pending['name'],
+            'mobile'     => $pending['mobile'],
+            'email'      => $pending['email'],
+            'password'   => $pending['password'],
+            'role'       => $allowedRole,
+            'status'     => $allowedRole === 'buyer' ? 'active' : 'pending',
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
 
-        if ($pending['type'] === 'seller') {
-            $userData['business_name'] = $pending['business_name'] ?? null;
-            $userData['gst_number']    = $pending['gst_number']    ?? null;
+        if ($allowedRole === 'seller') {
+            $insert['business_name'] = $pending['business_name'] ?? null;
+            $insert['gst_number']    = $pending['gst_number']    ?? null;
         }
 
-        $user = User::create($userData);
+        $userId = DB::table('users')->insertGetId($insert);
+        $user   = User::find($userId);
 
         session()->forget('pending_registration');
 
@@ -73,7 +87,7 @@ class OtpController extends Controller
         Auth::login($user);
         $request->session()->regenerate();
 
-        if ($pending['type'] === 'seller') {
+        if ($allowedRole === 'seller') {
             return redirect()->route('auth.pending');
         }
 

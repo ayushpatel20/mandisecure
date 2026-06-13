@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class OtpCode extends Model
 {
-    protected $fillable = ['mobile', 'code', 'resend_count', 'used', 'expires_at'];
+    protected $fillable = ['mobile', 'code', 'resend_count', 'failed_attempts', 'used', 'expires_at'];
 
     protected $casts = [
         'used'       => 'boolean',
