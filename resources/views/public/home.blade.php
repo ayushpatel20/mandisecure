@@ -1020,8 +1020,8 @@
                             <div>
                                 <div style="font-size:0.72rem;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:0.1em">{{ __('home.cta_addr_lbl') }}</div>
                                 <div style="color:rgba(255,255,255,0.7);font-size:0.85rem;line-height:1.5">
-                                    No. 712, Koppa-Maddur Rd, Hosakere,<br>
-                                    Maddur, Mandya, Karnataka — 571419
+                                    Marasinganahalli Road,<br>
+                                    Hosakere, Karnataka, India
                                 </div>
                             </div>
                         </div>

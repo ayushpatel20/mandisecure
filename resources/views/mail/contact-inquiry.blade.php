@@ -105,7 +105,7 @@
   <div class="footer">
     &copy; {{ date('Y') }} Mandi Secure Private Limited &mdash;
     <a href="https://www.mandisecure.com">www.mandisecure.com</a><br>
-    No. 712, Koppa-Maddur Rd, Maddur, Mandya, Karnataka &mdash; 571419
+    Marasinganahalli Road, Hosakere, Karnataka, India
   </div>
 
 </div>

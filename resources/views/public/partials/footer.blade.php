@@ -116,9 +116,9 @@
                             <i class="bi bi-geo-alt-fill" style="color:var(--ms-gold);font-size:0.85rem"></i>
                         </div>
                         <div style="font-size:0.85rem;color:rgba(255,255,255,0.55);line-height:1.6">
-                            No. 712, Koppa-Maddur Rd, Hosakere,<br>
-                            Maddur, Besagarahalli, Mandya,<br>
-                            Karnataka &mdash; 571419
+                            Marasinganahalli Road,<br>
+                            Hosakere, Karnataka, India<br>
+                            <span style="font-size:0.78rem;opacity:0.7">Plus Code: J2P6+QJJ</span>
                         </div>
                     </div>
                     <div class="d-flex gap-3 align-items-center">

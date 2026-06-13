@@ -295,9 +295,9 @@
                         <div>
                             <div class="contact-info-label">{{ __('contact.info_hq') }}</div>
                             <div class="contact-info-value">
-                                No. 712, Koppa-Maddur Rd,<br>
-                                Hosakere, Maddur, Besagarahalli,<br>
-                                Mandya, Karnataka &mdash; 571419
+                                Marasinganahalli Road,<br>
+                                Hosakere, Karnataka, India<br>
+                                <span style="font-size:0.82rem;color:var(--ms-muted)">Plus Code: J2P6+QJJ</span>
                             </div>
                         </div>
                     </div>
@@ -392,9 +392,9 @@
                 <div style="font-family:'Playfair Display',serif;font-weight:700;font-size:1.15rem;
                             color:#fff;margin-bottom:0.3rem;text-shadow:0 2px 8px rgba(0,0,0,0.6)">Mandi Secure Private Limited</div>
                 <div style="font-size:0.88rem;color:rgba(255,255,255,0.90);text-shadow:0 1px 4px rgba(0,0,0,0.5)">
-                    No. 712, Koppa-Maddur Rd, Hosakere, Maddur, Karnataka — 571419
+                    Marasinganahalli Road, Hosakere, Karnataka, India
                 </div>
-                <a href="https://maps.google.com/?q=Maddur,Karnataka,India" target="_blank"
+                <a href="https://maps.google.com/?q=12.636974,77.011528" target="_blank"
                    class="btn btn-ms-primary mt-3" style="padding:0.45rem 1.1rem;font-size:0.85rem">
                     <i class="bi bi-map me-1"></i> {{ __('contact.map_title') }}
                 </a>

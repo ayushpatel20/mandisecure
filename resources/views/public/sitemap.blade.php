@@ -38,24 +38,5 @@
         <priority>0.3</priority>
     </url>
 
-    <!-- Dynamic category pages -->
-    @foreach ($categories as $category)
-    <url>
-        <loc>{{ url('/buyer/categories/' . $category->slug) }}</loc>
-        <lastmod>{{ $category->updated_at->toAtomString() }}</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.7</priority>
-    </url>
-    @endforeach
-
-    <!-- Dynamic product pages -->
-    @foreach ($products as $product)
-    <url>
-        <loc>{{ url('/buyer/products/' . $product->slug) }}</loc>
-        <lastmod>{{ $product->updated_at->toAtomString() }}</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-    </url>
-    @endforeach
 
 </urlset>
