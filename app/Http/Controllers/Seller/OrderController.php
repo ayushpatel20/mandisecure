@@ -33,12 +33,17 @@ class OrderController extends Controller
 
         $orders = $query->paginate(20)->withQueryString();
 
+        $statusCounts = DB::table('orders')
+            ->whereIn('id', $orderIds)
+            ->selectRaw("COUNT(*) as total, SUM(status = 'pending') as pending, SUM(status = 'confirmed') as confirmed, SUM(status = 'processing') as processing, SUM(status = 'shipped') as shipped")
+            ->first();
+
         $stats = [
-            'total'      => Order::whereIn('id', $orderIds)->count(),
-            'pending'    => Order::whereIn('id', $orderIds)->where('status', 'pending')->count(),
-            'confirmed'  => Order::whereIn('id', $orderIds)->where('status', 'confirmed')->count(),
-            'processing' => Order::whereIn('id', $orderIds)->where('status', 'processing')->count(),
-            'shipped'    => Order::whereIn('id', $orderIds)->where('status', 'shipped')->count(),
+            'total'      => $statusCounts->total      ?? 0,
+            'pending'    => $statusCounts->pending     ?? 0,
+            'confirmed'  => $statusCounts->confirmed   ?? 0,
+            'processing' => $statusCounts->processing  ?? 0,
+            'shipped'    => $statusCounts->shipped      ?? 0,
         ];
 
         return view('seller.orders.index', compact('orders', 'stats'));

@@ -22,12 +22,17 @@ class PaymentController extends Controller
                              ->with('success', 'This order is already paid.');
         }
 
+        $settingRows = Setting::whereIn('key', [
+            'payment_upi_id', 'payment_bank_account_holder',
+            'payment_bank_account_number', 'payment_bank_ifsc', 'payment_bank_name',
+        ])->pluck('value', 'key');
+
         $settings = [
-            'upi_id'               => Setting::get('payment_upi_id', 'mandisecure@ybl'),
-            'bank_account_holder'  => Setting::get('payment_bank_account_holder', 'MandiSecure Pvt Ltd'),
-            'bank_account_number'  => Setting::get('payment_bank_account_number', '—'),
-            'bank_ifsc'            => Setting::get('payment_bank_ifsc', '—'),
-            'bank_name'            => Setting::get('payment_bank_name', '—'),
+            'upi_id'               => $settingRows->get('payment_upi_id')               ?? 'mandisecure@ybl',
+            'bank_account_holder'  => $settingRows->get('payment_bank_account_holder')  ?? 'MandiSecure Pvt Ltd',
+            'bank_account_number'  => $settingRows->get('payment_bank_account_number')  ?? '—',
+            'bank_ifsc'            => $settingRows->get('payment_bank_ifsc')            ?? '—',
+            'bank_name'            => $settingRows->get('payment_bank_name')            ?? '—',
         ];
 
         $failedPayment = $order->payment && $order->payment->isFailed()

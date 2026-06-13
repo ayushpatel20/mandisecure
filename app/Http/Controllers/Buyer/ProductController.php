@@ -53,6 +53,7 @@ class ProductController extends Controller
             ->whereNotNull('location')
             ->distinct()
             ->orderBy('location')
+            ->limit(200)
             ->pluck('location');
 
         $priceRange = [

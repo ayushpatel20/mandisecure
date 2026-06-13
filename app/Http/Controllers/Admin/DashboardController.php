@@ -5,21 +5,29 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
-use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
     public function index()
     {
+        $userStats = DB::table('users')
+            ->selectRaw("COUNT(*) as total, SUM(role = 'buyer') as buyers, SUM(role = 'seller') as sellers")
+            ->first();
+
+        $productStats = DB::table('products')
+            ->selectRaw("COUNT(*) as total, SUM(status = 'pending') as pending, SUM(status = 'approved') as approved, SUM(status = 'rejected') as rejected")
+            ->first();
+
         $stats = [
-            'total_users'       => User::count(),
-            'total_buyers'      => User::where('role', 'buyer')->count(),
-            'total_sellers'     => User::where('role', 'seller')->count(),
+            'total_users'       => $userStats->total,
+            'total_buyers'      => $userStats->buyers,
+            'total_sellers'     => $userStats->sellers,
             'total_categories'  => Category::count(),
-            'total_products'    => Product::count(),
-            'pending_products'  => Product::pending()->count(),
-            'approved_products' => Product::approved()->count(),
-            'rejected_products' => Product::rejected()->count(),
+            'total_products'    => $productStats->total,
+            'pending_products'  => $productStats->pending,
+            'approved_products' => $productStats->approved,
+            'rejected_products' => $productStats->rejected,
         ];
 
         $latestProducts = Product::with(['category', 'seller'])
