@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Services\OtpService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\Password;
 
 class RegisterController extends Controller
@@ -24,24 +23,26 @@ class RegisterController extends Controller
             'password' => ['required', 'confirmed', Password::min(8)->letters()->numbers()],
         ]);
 
-        $user = User::create([
+        $otp = new OtpService();
+        $code = $otp->generate($data['mobile']);
+
+        try {
+            $otp->send($data['mobile'], $code);
+        } catch (\Throwable) {
+            return back()->withInput()->withErrors([
+                'mobile' => 'Failed to send OTP. Please check your mobile number and try again.',
+            ]);
+        }
+
+        session(['pending_registration' => [
+            'type'     => 'buyer',
             'name'     => $data['name'],
             'mobile'   => $data['mobile'],
             'email'    => $data['email'],
             'password' => $data['password'],
-            'role'     => 'buyer',
-            'status'   => 'active',
-        ]);
+        ]]);
 
-        try {
-            $user->sendEmailVerificationNotification();
-        } catch (\Throwable) {}
-
-        Auth::login($user);
-        $request->session()->regenerate();
-
-        return redirect()->route('buyer.dashboard')
-            ->with('success', 'Welcome to MandiSecure! Your buyer account is ready.');
+        return redirect()->route('otp.verify.show');
     }
 
     public function registerSeller(Request $request)
@@ -55,24 +56,27 @@ class RegisterController extends Controller
             'password'      => ['required', 'confirmed', Password::min(8)->letters()->numbers()],
         ]);
 
-        $user = User::create([
+        $otp = new OtpService();
+        $code = $otp->generate($data['mobile']);
+
+        try {
+            $otp->send($data['mobile'], $code);
+        } catch (\Throwable) {
+            return back()->withInput()->withErrors([
+                'mobile' => 'Failed to send OTP. Please check your mobile number and try again.',
+            ]);
+        }
+
+        session(['pending_registration' => [
+            'type'          => 'seller',
             'name'          => $data['name'],
             'business_name' => $data['business_name'],
             'gst_number'    => $data['gst_number'] ?? null,
             'mobile'        => $data['mobile'],
             'email'         => $data['email'],
             'password'      => $data['password'],
-            'role'          => 'seller',
-            'status'        => 'pending',
-        ]);
+        ]]);
 
-        try {
-            $user->sendEmailVerificationNotification();
-        } catch (\Throwable) {}
-
-        Auth::login($user);
-        $request->session()->regenerate();
-
-        return redirect()->route('auth.pending');
+        return redirect()->route('otp.verify.show');
     }
 }
