@@ -12,7 +12,7 @@ class OtpService
     private const CODE_LENGTH    = 6;
 
     // Generate a new OTP for a mobile, invalidating any existing unused OTP.
-    public function generate(string $mobile): string
+    public function generate(string $mobile, int $expiryMinutes = self::EXPIRY_MINUTES): string
     {
         OtpCode::where('mobile', $mobile)->where('used', false)->update(['used' => true]);
 
@@ -23,7 +23,7 @@ class OtpService
             'code'         => hash('sha256', $code),
             'resend_count' => 0,
             'used'         => false,
-            'expires_at'   => now()->addMinutes(self::EXPIRY_MINUTES),
+            'expires_at'   => now()->addMinutes($expiryMinutes),
         ]);
 
         return $code;
@@ -74,7 +74,7 @@ class OtpService
 
     // Generate and return a new OTP for resend, carrying forward the resend count.
     // Returns null if max resend attempts have been reached.
-    public function resend(string $mobile): ?string
+    public function resend(string $mobile, int $expiryMinutes = self::EXPIRY_MINUTES): ?string
     {
         $otp = OtpCode::where('mobile', $mobile)
             ->where('used', false)
@@ -95,7 +95,7 @@ class OtpService
             'code'         => hash('sha256', $code),
             'resend_count' => $newResendCount,
             'used'         => false,
-            'expires_at'   => now()->addMinutes(self::EXPIRY_MINUTES),
+            'expires_at'   => now()->addMinutes($expiryMinutes),
         ]);
 
         return $code;

@@ -79,6 +79,7 @@ class DatabaseSeeder extends Seeder
                 'expected_delivery_time' => '1-2 days',
                 'location'               => 'Kerala',
                 'status'                 => 'approved',
+                'image'                  => 'products/4zWTYv1vW1e0k1o5Idn2eXpsS27EL5nVzj0bgGXA.jpg',
             ],
             [
                 'category_id'            => $vegetables->id,
@@ -95,6 +96,7 @@ class DatabaseSeeder extends Seeder
                 'expected_delivery_time' => 'Same day',
                 'location'               => 'Pune, Maharashtra',
                 'status'                 => 'approved',
+                'image'                  => 'products/3Rr2ILmTcmwE5HFmjqDJQYF6hDHukBE1ZgCZ24zw.jpg',
             ],
             [
                 'category_id'            => $fruits->id,
@@ -110,7 +112,8 @@ class DatabaseSeeder extends Seeder
                 'delivery_charges'       => 80.00,
                 'expected_delivery_time' => '2-3 days',
                 'location'               => 'Ratnagiri, Maharashtra',
-                'status'                 => 'pending',
+                'status'                 => 'approved', // Seed it as approved to test on homepage
+                'image'                  => 'products/rJdGaNtvNqc2SpgwbgOcffgVYaahgZ2LnmS7FNT3.jpg',
             ],
             [
                 'category_id'            => $masala->id,
@@ -126,7 +129,8 @@ class DatabaseSeeder extends Seeder
                 'delivery_charges'       => 40.00,
                 'expected_delivery_time' => '3-5 days',
                 'location'               => 'Erode, Tamil Nadu',
-                'status'                 => 'pending',
+                'status'                 => 'approved', // Seed it as approved to test on homepage
+                'image'                  => 'products/WFf7fvKk0rWYK0VM4GHPxM7SGpKK71IYEnawsJKy.jpg',
             ],
         ];
 

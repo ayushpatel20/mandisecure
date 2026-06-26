@@ -38,14 +38,11 @@
 
                         {{-- Category Image --}}
                         <div class="cat-img-wrap">
-                            @if ($category->image)
-                                <img src="{{ Storage::url($category->image) }}"
-                                     alt="{{ $category->name }}"
-                                     class="w-100 h-100"
-                                     style="object-fit:cover">
-                            @else
-                                <i class="bi bi-tag fs-1 text-success"></i>
-                            @endif
+                            <img src="{{ $category->image ? Storage::url($category->image) : asset('images/category.jpg') }}"
+                                 alt="{{ $category->name }}"
+                                 class="w-100 h-100"
+                                 style="object-fit:cover"
+                                 loading="lazy">
                         </div>
 
                         <div class="card-body text-center py-3">

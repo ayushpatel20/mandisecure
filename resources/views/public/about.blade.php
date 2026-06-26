@@ -78,6 +78,16 @@
     margin: 0 auto 1.25rem;
     box-shadow: 0 8px 20px rgba(26,107,60,0.25);
 }
+
+/* ─── 5F: About mobile overrides ─── */
+@media (max-width: 575px) {
+    .about-hero { min-height: 45vh; }
+    .about-hero > .container { padding-top: 3rem !important; padding-bottom: 2.5rem !important; }
+    .about-pillar { padding: 1.5rem 1.25rem; }
+    .info-row { padding: 1rem 0; }
+    .info-icon { width: 36px; height: 36px; font-size: 0.9rem; }
+    .team-avatar { width: 68px; height: 68px; font-size: 1.7rem; }
+}
 </style>
 @endpush
 
@@ -169,9 +179,9 @@
                                 {{ __('about.info_hq') ?? __('common.address') }}
                             </div>
                             <div style="font-weight:600;color:var(--ms-dark)">
-                                Marasinganahalli Road,<br>
-                                Hosakere, Karnataka, India<br>
-                                <span style="font-size:0.82rem;font-weight:400;color:var(--ms-muted)">Plus Code: J2P6+QJJ</span>
+                                No. 712, Koppa-Maddur,<br>
+                                Rd Besagara Halli Cross<br> Hosakere  Karnataka<br>
+                                <span style="font-size:0.82rem;font-weight:400;color:var(--ms-muted)">Pin Code - 571419</span>
                             </div>
                         </div>
                     </div>
@@ -195,9 +205,9 @@
                                         text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.25rem">
                                 {{ __('common.mobile') }}
                             </div>
-                            <a href="tel:+916366799332"
+                            <a href="tel:+919740912429"
                                style="font-weight:600;color:var(--ms-green);text-decoration:none">
-                                +91 6366 799 332
+                                +91 9740 912 429
                             </a>
                         </div>
                     </div>
@@ -237,10 +247,10 @@
         <div class="row g-4 justify-content-center">
             @php
             $team = [
-                ['name'=>'Managing Director',   'role'=>'Founder & CEO',                'emoji'=>'👨‍💼'],
-                ['name'=>'Operations Director', 'role'=>'Head of Operations',           'emoji'=>'👩‍💼'],
-                ['name'=>'Technology Head',     'role'=>'Chief Technology Officer',     'emoji'=>'👨‍💻'],
-                ['name'=>'Trade Relations',     'role'=>'Head of Seller Relations',     'emoji'=>'🤝'],
+                ['name'=>'Vasanthakumari MP',   'role'=>'Founder & CEO' ,                'emoji'=>'👩‍💼'],
+                ['name'=>'Muskan Patel', 'role'=>'Managing Director',           'emoji'=>'👩‍💼'],
+                ['name'=>'Ajeet Singh',     'role'=>'Chief Technology Officer',     'emoji'=>'👨‍💻'],
+                ['name'=>'Avin Kumar M.A.',     'role'=>'Chief Financial Officer',     'emoji'=>'🤝'],
             ];
             @endphp
             @foreach($team as $t)

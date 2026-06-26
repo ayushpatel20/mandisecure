@@ -25,6 +25,7 @@ use App\Http\Controllers\Seller\PaymentController   as SellerPayment;
 use App\Http\Controllers\Seller\OrderController     as SellerOrder;
 use App\Http\Controllers\Seller\ProfileController   as SellerProfile;
 use App\Http\Controllers\Auth\OtpController;
+use App\Http\Controllers\Auth\AdminOtpController;
 use App\Http\Controllers\PublicController;
 use Illuminate\Support\Facades\Route;
 
@@ -80,6 +81,11 @@ Route::middleware('guest')->group(function () {
     Route::get('/register/otp/verify',  [OtpController::class, 'showVerify'])->name('otp.verify.show');
     Route::post('/register/otp/verify', [OtpController::class, 'verify'])->name('otp.verify')->middleware('throttle:10,1');
     Route::post('/register/otp/resend', [OtpController::class, 'resend'])->name('otp.resend')->middleware('throttle:3,5');
+
+    // Admin 2FA OTP
+    Route::get('/admin/2fa',         [AdminOtpController::class, 'showVerify'])->name('admin.otp.show');
+    Route::post('/admin/2fa',        [AdminOtpController::class, 'verify'])->name('admin.otp.verify')->middleware('throttle:10,1');
+    Route::post('/admin/2fa/resend', [AdminOtpController::class, 'resend'])->name('admin.otp.resend')->middleware('throttle:3,5');
 
     // Password reset
     Route::get('/forgot-password',         [ForgotPasswordController::class, 'showRequest'])->name('password.request');

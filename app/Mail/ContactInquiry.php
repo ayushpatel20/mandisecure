@@ -16,14 +16,14 @@ class ContactInquiry extends Mailable
         public readonly string $senderName,
         public readonly string $senderEmail,
         public readonly string $senderMobile,
-        public readonly string $subject,
+        public readonly string $inquirySubject,
         public readonly string $body,
     ) {}
 
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: '[MandiSecure Inquiry] ' . $this->subject,
+            subject: '[MandiSecure Inquiry] ' . $this->inquirySubject,
             replyTo: [
                 new \Illuminate\Mail\Mailables\Address($this->senderEmail, $this->senderName),
             ],

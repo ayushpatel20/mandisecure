@@ -50,7 +50,7 @@
                 </div>
 
                 {{-- WhatsApp CTA --}}
-                <a href="https://wa.me/916366799332?text=Hello%2C%20I%20am%20interested%20in%20MandiSecure."
+                <a href="https://wa.me/919740912429?text=Hello%2C%20I%20am%20interested%20in%20MandiSecure."
                    target="_blank" rel="noopener"
                    style="display:inline-flex;align-items:center;gap:0.5rem;margin-top:1rem;
                           background:rgba(37,211,102,0.12);border:1px solid rgba(37,211,102,0.3);
@@ -116,9 +116,9 @@
                             <i class="bi bi-geo-alt-fill" style="color:var(--ms-gold);font-size:0.85rem"></i>
                         </div>
                         <div style="font-size:0.85rem;color:rgba(255,255,255,0.55);line-height:1.6">
-                            Marasinganahalli Road,<br>
-                            Hosakere, Karnataka, India<br>
-                            <span style="font-size:0.78rem;opacity:0.7">Plus Code: J2P6+QJJ</span>
+                            No. 712, Koppa-Maddur Rd,,<br>
+                            Besagara Halli Cross, Hosakere,Mandya, Karnataka  <br>
+                            <span style="font-size:0.78rem;opacity:0.7">Pin-Code : 571419</span>
                         </div>
                     </div>
                     <div class="d-flex gap-3 align-items-center">
@@ -126,10 +126,10 @@
                                     flex-shrink:0;display:flex;align-items:center;justify-content:center">
                             <i class="bi bi-telephone-fill" style="color:var(--ms-gold);font-size:0.85rem"></i>
                         </div>
-                        <a href="tel:+916366799332"
+                        <a href="tel:+919740912429"
                            style="font-size:0.9rem;color:rgba(255,255,255,0.7);text-decoration:none"
                            onmouseover="this.style.color='#fff'"
-                           onmouseout="this.style.color='rgba(255,255,255,0.7)'">+91 6366 799 332</a>
+                           onmouseout="this.style.color='rgba(255,255,255,0.7)'">+91 9740 912 429</a>
                     </div>
                     <div class="d-flex gap-3 align-items-center">
                         <div style="width:32px;height:32px;border-radius:8px;background:rgba(26,107,60,0.3);

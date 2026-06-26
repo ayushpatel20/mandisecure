@@ -181,22 +181,42 @@
     overflow: hidden;
     border: none;
     cursor: pointer;
-    transition: transform 0.25s, box-shadow 0.25s;
+    transition: transform 0.3s, box-shadow 0.3s;
     text-decoration: none;
-    display: block;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
-.cat-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(0,0,0,0.12) !important; }
+.cat-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(0,0,0,0.15) !important; }
+.cat-img-container {
+    height: 180px;
+    overflow: hidden;
+    position: relative;
+    border-radius: 16px 16px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.cat-img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+.cat-img-container span {
+    transition: transform 0.3s ease;
+}
+.cat-card:hover .cat-img-container img {
+    transform: scale(1.08);
+}
+.cat-card:hover .cat-img-container span {
+    transform: scale(1.08);
+}
 .cat-card-body {
-    padding: 1.75rem 1.5rem;
+    padding: 1.25rem 1.25rem 1.5rem;
     position: relative;
     overflow: hidden;
-}
-.cat-icon-wrap {
-    width: 60px; height: 60px;
-    border-radius: 14px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.75rem;
-    margin-bottom: 1rem;
+    flex-grow: 1;
 }
 .cat-card-name {
     font-family: 'Playfair Display', serif;
@@ -258,6 +278,19 @@
 .pub-product-discount {
     font-size: 0.72rem; font-weight: 700; background: #dcfce7;
     color: #166534; padding: 0.15rem 0.45rem; border-radius: 4px;
+}
+.pub-product-location {
+    font-size: 0.78rem; color: var(--ms-muted); margin-bottom: 0.5rem;
+    display: flex; align-items: center; gap: 0.3rem;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.pub-product-location .bi { color: var(--ms-green); flex-shrink: 0; font-size: 0.72rem; }
+.pub-product-location span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pub-product-moq {
+    font-size: 0.74rem; font-weight: 600; color: var(--ms-green);
+    background: var(--ms-green-light); border-radius: 5px;
+    padding: 0.2rem 0.55rem; display: inline-flex;
+    align-items: center; margin-top: 0.5rem;
 }
 
 /* ─── Why Choose ─── */
@@ -452,6 +485,29 @@
     border: 1px solid rgba(255,255,255,0.04);
     right: -100px; top: -100px;
 }
+
+/* ─── 5A/5C/5D/5E: Mobile overrides ─── */
+@media (max-width: 575px) {
+    .hero-section { min-height: 75vh; }
+    .hero-section > .container { padding-top: 2.5rem !important; padding-bottom: 2rem !important; }
+    .hero-title { font-size: clamp(1.9rem, 7.5vw, 2.5rem); }
+    .hero-subtitle { font-size: 0.92rem; margin-bottom: 1.25rem; }
+    .hero-eyebrow { font-size: 0.72rem; padding: 0.3rem 0.8rem; }
+    .hero-search { max-width: 100%; padding: 5px 5px 5px 14px; }
+    .hero-stat-pill { font-size: 0.76rem; padding: 0.35rem 0.75rem; }
+    .cat-card-body { padding: 1.2rem 1rem; }
+    .pub-product-img,
+    .pub-product-img-placeholder { height: 160px; }
+    .why-feature-card { padding: 1.25rem 1rem; }
+    .mv-card { padding: 1.75rem 1.5rem; }
+    .stat-card { padding: 2rem 0.75rem; }
+    .stat-divider { display: none; }
+}
+
+@media (max-width: 390px) {
+    .hero-title { font-size: clamp(1.75rem, 8vw, 2.1rem); }
+    .hero-section { min-height: 70vh; }
+}
 </style>
 @endpush
 
@@ -614,16 +670,12 @@
             @php $cfg = $catConfig[$cat->name] ?? ['emoji'=>'🌿','bg'=>'linear-gradient(145deg,#f0fdf4,#dcfce7)','iconBg'=>'#d1fae5','color'=>'#065f46','badge'=>'#059669']; @endphp
             <div class="col-sm-6 col-lg-3">
                 <a href="{{ route('login') }}" class="cat-card shadow-sm" style="background:{{ $cfg['bg'] }}">
+                    <div class="cat-img-container" style="background:{{ $cfg['iconBg'] }}">
+                        <img src="{{ $cat->image ? Storage::url($cat->image) : asset('images/category.jpg') }}"
+                             alt="{{ $cat->name }}"
+                             loading="lazy">
+                    </div>
                     <div class="cat-card-body">
-                        <div class="cat-icon-wrap" style="background:{{ $cfg['iconBg'] }}">
-                            @if($cat->image)
-                                <img src="{{ Storage::url($cat->image) }}"
-                                     alt="{{ $cat->name }}"
-                                     style="width:2.6rem;height:2.6rem;object-fit:cover;border-radius:10px;">
-                            @else
-                                <span style="font-size:1.6rem">{{ $cfg['emoji'] }}</span>
-                            @endif
-                        </div>
                         <div class="cat-card-name" style="color:{{ $cfg['color'] }}">{{ $cat->name }}</div>
                         <div class="cat-card-count" style="color:{{ $cfg['color'] }}">
                             {{ $cat->approved_count }} {{ $cat->approved_count === 1 ? __('home.cat_product') : __('home.cat_products') }}
@@ -661,28 +713,24 @@
             @foreach($featuredProducts as $product)
             <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="pub-product-card">
-                    {{-- Image --}}
-                    @if($product->image)
-                        <img src="{{ Storage::url($product->image) }}"
-                             alt="{{ $product->name }}"
-                             class="pub-product-img">
-                    @else
-                        <div class="pub-product-img-placeholder">
-                            @php
-                            $emojis = ['🥥'=>'Coconut','🥬'=>'Vegetables','🍎'=>'Fruits','🌶'=>'Masala','🌿'=>''];
-                            $em = array_search($product->category->name ?? '', $emojis) ?: '🌿';
-                            @endphp
-                            <span>{{ $em }}</span>
-                        </div>
-                    @endif
+                    <img src="{{ $product->image ? Storage::url($product->image) : asset('images/category.jpg') }}"
+                         alt="{{ $product->product_name }}"
+                         class="pub-product-img"
+                         loading="lazy">
 
                     <div class="pub-product-body">
                         <div class="pub-product-category">
                             {{ $product->category->name ?? 'General' }}
                         </div>
-                        <div class="pub-product-name">{{ $product->name }}</div>
+                        <div class="pub-product-name">{{ $product->product_name }}</div>
+                        @if($product->location)
+                        <div class="pub-product-location">
+                            <i class="bi bi-geo-alt-fill"></i>
+                            <span>{{ $product->location }}</span>
+                        </div>
+                        @endif
                         <div class="pub-product-seller">
-                            <i class="bi bi-person-circle me-1"></i>
+                            <i class="bi bi-patch-check-fill me-1" style="color:var(--ms-green);font-size:0.75rem"></i>
                             {{ $product->seller->name ?? 'Verified Seller' }}
                         </div>
                         <div class="d-flex align-items-center gap-2 flex-wrap">
@@ -699,6 +747,9 @@
                                 @endphp
                                 <div class="pub-product-discount">{{ $pct }}% OFF</div>
                             @endif
+                        </div>
+                        <div class="pub-product-moq">
+                            <i class="bi bi-box-seam me-1"></i>MOQ: {{ $product->minimum_order_quantity }} {{ $product->unit }}
                         </div>
                         <a href="{{ route('login') }}"
                            class="btn btn-ms-primary w-100 mt-3" style="padding:0.5rem">
@@ -995,8 +1046,8 @@
                             </div>
                             <div>
                                 <div style="font-size:0.72rem;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:0.1em">{{ __('home.cta_call') }}</div>
-                                <a href="tel:+916366799332" style="color:#fff;text-decoration:none;font-weight:600;font-size:0.95rem">
-                                    +91 6366 799 332
+                                <a href="tel:+919740912429" style="color:#fff;text-decoration:none;font-weight:600;font-size:0.95rem">
+                                    +91 9740 912 429 
                                 </a>
                             </div>
                         </div>
@@ -1020,8 +1071,8 @@
                             <div>
                                 <div style="font-size:0.72rem;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:0.1em">{{ __('home.cta_addr_lbl') }}</div>
                                 <div style="color:rgba(255,255,255,0.7);font-size:0.85rem;line-height:1.5">
-                                    Marasinganahalli Road,<br>
-                                    Hosakere, Karnataka, India
+                                   No. 712, Koppa-Maddur Rd, Besagara Halli Cross,
+                                      Hosakere, Maddur, Mandya, Karnataka – 571419
                                 </div>
                             </div>
                         </div>

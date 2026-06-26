@@ -4,8 +4,8 @@
     <ul style="margin-bottom:0">
         <li><strong>Company:</strong> Mandi Secure Private Limited</li>
         <li><strong>Email:</strong> <a href="mailto:Headoffice@mandisecure.com" style="color:var(--ms-green)">Headoffice@mandisecure.com</a></li>
-        <li><strong>Phone:</strong> <a href="tel:+916366799332" style="color:var(--ms-green)">+91 6366 799 332</a></li>
-        <li><strong>Address:</strong> Marasinganahalli Road, Hosakere, Karnataka, India (Plus Code: J2P6+QJJ)</li>
+        <li><strong>Phone:</strong> <a href="tel:+919740912429" style="color:var(--ms-green)">+91 6366 799 332</a></li>
+        <li><strong>Address:</strong> No. 712, Koppa-Maddur Rd, Besagara Halli Cross, Hosakere, Maddur, Mandya, Karnataka – 571419</li>
     </ul>
 </div>
 

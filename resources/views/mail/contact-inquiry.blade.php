@@ -66,7 +66,7 @@
 
     <div class="field">
       <div class="field-label">Subject</div>
-      <div class="field-value" style="font-size:1.05rem;color:#1a6b3c;font-weight:700">{{ $subject }}</div>
+      <div class="field-value" style="font-size:1.05rem;color:#1a6b3c;font-weight:700">{{ $inquirySubject }}</div>
     </div>
 
     <hr class="divider">

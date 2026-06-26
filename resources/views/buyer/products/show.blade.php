@@ -56,24 +56,17 @@
             <div class="product-gallery">
 
                 {{-- Main image --}}
-                @if ($product->image)
-                    <img src="{{ Storage::url($product->image) }}"
-                         alt="{{ $product->product_name }}"
-                         class="product-main-image shadow-sm mb-3">
-                @else
-                    <div class="product-main-placeholder shadow-sm mb-3">
-                        <i class="bi bi-image fs-1 text-muted"></i>
-                    </div>
-                @endif
+                <img src="{{ $product->image ? Storage::url($product->image) : asset('images/category.jpg') }}"
+                     alt="{{ $product->product_name }}"
+                     class="product-main-image shadow-sm mb-3">
 
                 {{-- Thumbnail strip (single image shown as active) --}}
                 <div class="d-flex gap-2">
-                    @if ($product->image)
-                        <img src="{{ Storage::url($product->image) }}"
-                             alt="thumb"
-                             class="rounded border border-success"
-                             style="width:64px;height:64px;object-fit:cover;cursor:pointer">
-                    @endif
+                    <img src="{{ $product->image ? Storage::url($product->image) : asset('images/category.jpg') }}"
+                         alt="thumb"
+                         class="rounded border border-success"
+                         style="width:64px;height:64px;object-fit:cover;cursor:pointer"
+                         loading="lazy">
                 </div>
 
             </div>
@@ -153,34 +146,62 @@
                         @endif
                     </span>
                 </div>
-                <div class="info-row">
-                    <span class="text-muted small fw-semibold">Delivery Charges</span>
-                    <span class="fw-semibold">
+            </div>
+
+            {{-- Delivery Information Card --}}
+            <div class="card border-0 bg-light p-3 rounded-3 mb-3">
+                <h6 class="fw-bold mb-2">Delivery Information</h6>
+                <div class="d-flex flex-column gap-2 small">
+                    <div>
+                        📦 <strong>Delivery Charges:</strong>
                         @if ($product->delivery_charges > 0)
-                            ₹{{ number_format($product->delivery_charges, 2) }}
+                            ₹{{ number_format($product->delivery_charges, 0) }}
                         @else
-                            <span class="text-success">Free Delivery</span>
+                            <span class="text-success fw-bold">Free Delivery</span>
                         @endif
-                    </span>
+                    </div>
+                    @if ($product->expected_delivery_time)
+                        <div>
+                            🚚 <strong>Expected Delivery:</strong> {{ $product->expected_delivery_time }}
+                        </div>
+                    @endif
+                    @if ($product->location)
+                        <div>
+                            📍 <strong>Location:</strong> {{ $product->location }}
+                        </div>
+                    @endif
                 </div>
-                @if ($product->expected_delivery_time)
-                    <div class="info-row">
-                        <span class="text-muted small fw-semibold">Expected Delivery</span>
-                        <span class="fw-semibold">
-                            <i class="bi bi-truck me-1 text-success"></i>
-                            {{ $product->expected_delivery_time }}
-                        </span>
-                    </div>
-                @endif
-                @if ($product->location)
-                    <div class="info-row">
-                        <span class="text-muted small fw-semibold">Ships From</span>
-                        <span class="fw-semibold">
-                            <i class="bi bi-geo-alt me-1 text-success"></i>
-                            {{ $product->location }}
-                        </span>
-                    </div>
-                @endif
+            </div>
+
+            {{-- Payment & Bank Details Card --}}
+            <div class="card border-0 bg-light p-3 rounded-3 mb-3">
+                <h6 class="fw-bold mb-2">
+                    <i class="bi bi-bank text-success me-1"></i> Payment & Bank Details
+                </h6>
+                <table class="table table-sm table-borderless mb-0 small">
+                    <tr>
+                        <td class="text-muted pe-3" style="width: 140px; padding: 0.15rem 0;">Holder Name</td>
+                        <td class="fw-semibold text-dark" style="padding: 0.15rem 0;">{{ \App\Models\Setting::get('payment_bank_account_holder') ?: '—' }}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-muted" style="padding: 0.15rem 0;">Bank Name</td>
+                        <td class="fw-semibold text-dark" style="padding: 0.15rem 0;">{{ \App\Models\Setting::get('payment_bank_name') ?: '—' }}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-muted" style="padding: 0.15rem 0;">Account Number</td>
+                        <td class="fw-semibold text-dark" style="padding: 0.15rem 0;">{{ \App\Models\Setting::get('payment_bank_account_number') ?: '—' }}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-muted" style="padding: 0.15rem 0;">IFSC Code</td>
+                        <td class="fw-semibold text-dark" style="padding: 0.15rem 0;">{{ \App\Models\Setting::get('payment_bank_ifsc') ?: '—' }}</td>
+                    </tr>
+                    @if (\App\Models\Setting::get('payment_upi_id'))
+                    <tr>
+                        <td class="text-muted" style="padding: 0.15rem 0;">UPI ID</td>
+                        <td class="fw-semibold text-success" style="padding: 0.15rem 0;">{{ \App\Models\Setting::get('payment_upi_id') }}</td>
+                    </tr>
+                    @endif
+                </table>
             </div>
 
             {{-- CTA Buttons --}}
@@ -206,7 +227,7 @@
                     </button>
                     <a href="{{ route('buyer.cart.index') }}" class="btn btn-outline-success btn-lg px-3">
                         <i class="bi bi-cart3 me-1"></i> View Cart
-                        @if ($cartCount > 0)
+                        @if (($cartCount ?? 0) > 0)
                             <span class="badge bg-danger ms-1">{{ $cartCount }}</span>
                         @endif
                     </a>

@@ -128,16 +128,11 @@
                         <div class="p-3 {{ !$loop->last ? 'border-bottom' : '' }}">
                             <div class="d-flex gap-3 align-items-start">
                                 <div style="width:64px;height:64px;flex-shrink:0">
-                                    @if ($item->product && $item->product->image)
-                                        <img src="{{ Storage::url($item->product->image) }}"
+                                        <img src="{{ ($item->product && $item->product->image) ? Storage::url($item->product->image) : asset('images/category.jpg') }}"
                                              alt="{{ $item->product_name }}"
                                              class="rounded w-100 h-100"
-                                             style="object-fit:cover">
-                                    @else
-                                        <div class="rounded bg-light w-100 h-100 d-flex align-items-center justify-content-center">
-                                            <i class="bi bi-image text-muted"></i>
-                                        </div>
-                                    @endif
+                                             style="object-fit:cover"
+                                             loading="lazy">
                                 </div>
                                 <div class="flex-grow-1">
                                     <div class="fw-semibold">{{ $item->product_name }}</div>
@@ -280,6 +275,50 @@
                 @endif
             @else
                 <p class="text-muted mb-3">No payment submitted for this order.</p>
+
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <div class="p-3 bg-light rounded-3">
+                            <div class="fw-semibold small mb-2 text-dark">
+                                <i class="bi bi-bank text-success me-1"></i> Bank Transfer details
+                            </div>
+                            <table class="table table-sm table-borderless mb-0 small text-dark">
+                                <tr>
+                                    <td class="text-muted pe-3" style="width: 130px; padding: 0.15rem 0;">Holder Name</td>
+                                    <td class="fw-semibold" style="padding: 0.15rem 0;">{{ \App\Models\Setting::get('payment_bank_account_holder') ?: '—' }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-muted" style="padding: 0.15rem 0;">Bank Name</td>
+                                    <td class="fw-semibold" style="padding: 0.15rem 0;">{{ \App\Models\Setting::get('payment_bank_name') ?: '—' }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-muted" style="padding: 0.15rem 0;">Account Number</td>
+                                    <td class="fw-semibold" style="padding: 0.15rem 0;">{{ \App\Models\Setting::get('payment_bank_account_number') ?: '—' }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-muted" style="padding: 0.15rem 0;">IFSC Code</td>
+                                    <td class="fw-semibold" style="padding: 0.15rem 0;">{{ \App\Models\Setting::get('payment_bank_ifsc') ?: '—' }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    @if (\App\Models\Setting::get('payment_upi_id'))
+                    <div class="col-md-6">
+                        <div class="p-3 bg-light rounded-3 h-100">
+                            <div class="fw-semibold small mb-2 text-dark">
+                                <i class="bi bi-phone text-success me-1"></i> UPI details
+                            </div>
+                            <table class="table table-sm table-borderless mb-0 small text-dark">
+                                <tr>
+                                    <td class="text-muted pe-3" style="width: 130px; padding: 0.15rem 0;">UPI ID</td>
+                                    <td class="fw-semibold text-success" style="padding: 0.15rem 0;">{{ \App\Models\Setting::get('payment_upi_id') }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    @endif
+                </div>
+
                 <a href="{{ route('buyer.payment.create', $order) }}" class="btn btn-success">
                     <i class="bi bi-credit-card me-1"></i> Make Payment
                 </a>

@@ -1,4 +1,4 @@
-@php $active = $active ?? ''; @endphp
+@php $active = $active ?? ''; $cartCount = $cartCount ?? 0; @endphp
 
 <li class="nav-item mb-1">
     <a href="{{ route('buyer.dashboard') }}"

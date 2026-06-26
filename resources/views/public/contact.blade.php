@@ -135,6 +135,18 @@
 .faq-item.open .faq-answer { display: block; }
 .faq-item.open .faq-icon { transform: rotate(45deg); }
 .faq-icon { transition: transform 0.25s; flex-shrink: 0; color: #e8a020; }
+
+/* ─── 5G: Contact mobile overrides ─── */
+@media (max-width: 575px) {
+    .contact-hero { min-height: 40vh; }
+    .contact-hero > .container { padding-top: 3rem !important; padding-bottom: 2.5rem !important; }
+    .contact-form-wrap { padding: 1.5rem; border-radius: 14px; }
+    .btn-submit { width: 100%; justify-content: center; }
+    .contact-info-icon { width: 40px; height: 40px; font-size: 0.95rem; }
+    .contact-info-block { padding: 0.9rem 0; }
+    .faq-question { padding: 0.9rem 1rem; font-size: 0.88rem; }
+    .faq-answer { padding: 0 1rem 0.9rem; }
+}
 </style>
 @endpush
 
@@ -195,6 +207,17 @@
                         <div class="section-eyebrow">{{ __('contact.form_title') }}</div>
                         <h2 class="section-title" style="font-size:1.8rem;margin-bottom:0">{{ __('contact.form_sub') }}</h2>
                     </div>
+
+                    @if(session('success'))
+                        <div class="alert alert-success alert-ms-success mb-4" role="alert" style="border-radius:10px;">
+                            <i class="bi bi-check-circle-fill me-2"></i> {{ session('success') }}
+                        </div>
+                    @endif
+                    @if($errors->any())
+                        <div class="alert alert-danger mb-4" role="alert" style="border-radius:10px;">
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i> Please fix the errors below.
+                        </div>
+                    @endif
 
                     <form action="{{ route('public.contact.send') }}" method="POST" novalidate>
                         @csrf
@@ -274,7 +297,7 @@
                         <div>
                             <div class="contact-info-label">{{ __('contact.info_phone') }}</div>
                             <div class="contact-info-value">
-                                <a href="tel:+916366799332">+91 6366 799 332</a>
+                                <a href="tel:+919740912429 ">+91 9740 912 429 </a>
                             </div>
                             <div style="font-size:0.78rem;color:var(--ms-muted);margin-top:0.2rem">
                                 {{ __('contact.hours_val') }}
@@ -295,9 +318,9 @@
                         <div>
                             <div class="contact-info-label">{{ __('contact.info_hq') }}</div>
                             <div class="contact-info-value">
-                                Marasinganahalli Road,<br>
-                                Hosakere, Karnataka, India<br>
-                                <span style="font-size:0.82rem;color:var(--ms-muted)">Plus Code: J2P6+QJJ</span>
+                                No. 712, Koppa-Maddur Rd,<br>
+                                Besagara Halli Cross, Hosakere, Maddur, Mandya, Karnataka<br>
+                                <span style="font-size:0.82rem;color:var(--ms-muted)">Pin-Code : 571419 </span>
                             </div>
                         </div>
                     </div>
@@ -392,7 +415,7 @@
                 <div style="font-family:'Playfair Display',serif;font-weight:700;font-size:1.15rem;
                             color:#fff;margin-bottom:0.3rem;text-shadow:0 2px 8px rgba(0,0,0,0.6)">Mandi Secure Private Limited</div>
                 <div style="font-size:0.88rem;color:rgba(255,255,255,0.90);text-shadow:0 1px 4px rgba(0,0,0,0.5)">
-                    Marasinganahalli Road, Hosakere, Karnataka, India
+                    No. 712, Koppa-Maddur Rd, Besagara Halli Cross, Hosakere, Maddur, Mandya, Karnataka – 571419
                 </div>
                 <a href="https://maps.google.com/?q=12.636974,77.011528" target="_blank"
                    class="btn btn-ms-primary mt-3" style="padding:0.45rem 1.1rem;font-size:0.85rem">
@@ -413,5 +436,62 @@ function toggleFaq(id) {
     document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('open'));
     if (!wasOpen) item.classList.add('open');
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.querySelector('form[action*="contact"]');
+    if (!form) return;
+
+    form.addEventListener('submit', function (e) {
+        const requiredFields = form.querySelectorAll('[required]');
+        let isValid = true;
+        
+        requiredFields.forEach(field => {
+            if (!field.value.trim()) {
+                field.classList.add('border-danger');
+                isValid = false;
+            } else {
+                field.classList.remove('border-danger');
+            }
+        });
+
+        const emailField = form.querySelector('input[type="email"]');
+        if (emailField && emailField.value.trim()) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(emailField.value.trim())) {
+                emailField.classList.add('border-danger');
+                isValid = false;
+            }
+        }
+
+        if (!isValid) {
+            e.preventDefault();
+            // Show dynamic alert on top if it doesn't exist
+            let alertBox = form.previousElementSibling;
+            if (!alertBox || !alertBox.classList.contains('alert-danger')) {
+                const newAlert = document.createElement('div');
+                newAlert.className = 'alert alert-danger mb-4';
+                newAlert.style.borderRadius = '10px';
+                newAlert.role = 'alert';
+                newAlert.innerHTML = '<i class="bi bi-exclamation-triangle-fill me-2"></i> Please fill in all required fields correctly.';
+                form.parentNode.insertBefore(newAlert, form);
+            }
+            return;
+        }
+
+        // Show spinner & disable submit button
+        const btn = form.querySelector('.btn-submit');
+        if (btn) {
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Submitting...';
+        }
+    });
+
+    // Clear validation styling on input
+    form.querySelectorAll('.form-control-ms').forEach(input => {
+        input.addEventListener('input', function() {
+            this.classList.remove('border-danger');
+        });
+    });
+});
 </script>
 @endpush

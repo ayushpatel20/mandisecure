@@ -6,16 +6,11 @@
 
             {{-- Image --}}
             <div class="position-relative" style="height:180px;overflow:hidden">
-                @if ($product->image)
-                    <img src="{{ Storage::url($product->image) }}"
-                         alt="{{ $product->product_name }}"
-                         class="w-100 h-100 card-img-top"
-                         style="object-fit:cover">
-                @else
-                    <div class="w-100 h-100 bg-light d-flex align-items-center justify-content-center">
-                        <i class="bi bi-image fs-1 text-muted"></i>
-                    </div>
-                @endif
+                <img src="{{ $product->image ? Storage::url($product->image) : asset('images/category.jpg') }}"
+                     alt="{{ $product->product_name }}"
+                     class="w-100 h-100 card-img-top"
+                     style="object-fit:cover"
+                     loading="lazy">
 
                 {{-- Category badge --}}
                 <span class="position-absolute top-0 start-0 m-2 badge bg-success bg-opacity-90">

@@ -39,7 +39,7 @@ class Product extends Model
         'minimum_order_quantity' => 'integer',
     ];
 
-    public static array $units = ['kg', 'gram', 'piece', 'dozen', 'litre', 'quintal', 'bag'];
+    public static array $units = ['kg', 'gram', 'piece', 'crate', 'litre', 'ton', 'bag'];
 
     public function category(): BelongsTo
     {

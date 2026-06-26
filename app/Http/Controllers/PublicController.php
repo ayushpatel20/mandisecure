@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Mail\ContactInquiry;
 use App\Models\Category;
+use App\Models\Inquiry;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class PublicController extends Controller
@@ -53,17 +55,24 @@ class PublicController extends Controller
             'message' => 'required|string|max:3000',
         ]);
 
+        // Store enquiry in database
+        Inquiry::create($data);
+
         try {
             Mail::to(config('mail.from.address'))
                 ->send(new ContactInquiry(
-                    senderName:   $data['name'],
-                    senderEmail:  $data['email'],
-                    senderMobile: $data['mobile'] ?? '',
-                    subject:      $data['subject'],
-                    body:         $data['message'],
+                    senderName:     $data['name'],
+                    senderEmail:    $data['email'],
+                    senderMobile:   $data['mobile'] ?? '',
+                    inquirySubject: $data['subject'],
+                    body:           $data['message'],
                 ));
-        } catch (\Throwable) {
+        } catch (\Throwable $e) {
             // Mail failure is non-fatal — inquiry is still registered
+            Log::error('Contact inquiry mail sending failed: ' . $e->getMessage(), [
+                'exception' => $e,
+                'email' => $data['email']
+            ]);
         }
 
         return back()->with('success', 'Thank you for reaching out! Our team will respond within 24 hours.');

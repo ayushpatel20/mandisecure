@@ -147,6 +147,10 @@
             padding: 0.6rem 1.4rem;
             border-radius: 8px;
             transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+            min-height: 44px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
         .btn-ms-primary:hover {
             background: var(--ms-green-dark);
@@ -163,6 +167,10 @@
             padding: 0.6rem 1.4rem;
             border-radius: 8px;
             transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+            min-height: 44px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
         .btn-ms-gold:hover {
             background: var(--ms-gold-dark);
@@ -179,6 +187,10 @@
             border-radius: 8px;
             background: transparent;
             transition: all 0.2s;
+            min-height: 44px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
         .btn-outline-ms:hover {
             border-color: #fff;
@@ -247,6 +259,14 @@
                 margin-top: 0.5rem;
             }
         }
+
+        /* ─── 5A: Mobile Typography ─── */
+        @media (max-width: 575px) {
+            .section-title { font-size: clamp(1.45rem, 5.5vw, 1.85rem); }
+            .section-subtitle { font-size: 0.92rem; }
+            .brand-logo { height: 38px; }
+            .navbar-brand-text { font-size: 1.1rem; }
+        }
     </style>
 
     <!-- Legal page typography -->
@@ -294,7 +314,7 @@
     </script>
 
     <!-- WhatsApp Floating Button -->
-    <a href="https://wa.me/916366799332?text=Hello%2C%20I%20am%20interested%20in%20MandiSecure%20agricultural%20marketplace."
+    <a href="https://wa.me/919740912429?text=Hello%2C%20I%20am%20interested%20in%20MandiSecure%20agricultural%20marketplace."
        target="_blank" rel="noopener"
        style="position:fixed;bottom:1.5rem;right:1.5rem;z-index:9999;
               width:56px;height:56px;border-radius:50%;

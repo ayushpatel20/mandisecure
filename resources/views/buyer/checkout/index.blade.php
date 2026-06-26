@@ -127,6 +127,41 @@
                         </div>
                     </div>
                 </div>
+
+                {{-- Payment & Bank Details --}}
+                <div class="card border-0 shadow-sm mt-4">
+                    <div class="card-header bg-white fw-semibold">
+                        <i class="bi bi-bank text-success me-1"></i> Payment & Bank Details
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted small mb-3">You can make payments using Bank Transfer or UPI. Here are our official account details:</p>
+                        <table class="table table-sm table-borderless mb-0 small">
+                            <tr>
+                                <td class="text-muted pe-3" style="width: 140px; padding: 0.2rem 0;">Holder Name</td>
+                                <td class="fw-semibold text-dark" style="padding: 0.2rem 0;">{{ \App\Models\Setting::get('payment_bank_account_holder') ?: '—' }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted" style="padding: 0.2rem 0;">Bank Name</td>
+                                <td class="fw-semibold text-dark" style="padding: 0.2rem 0;">{{ \App\Models\Setting::get('payment_bank_name') ?: '—' }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted" style="padding: 0.2rem 0;">Account Number</td>
+                                <td class="fw-semibold text-dark" style="padding: 0.2rem 0;">{{ \App\Models\Setting::get('payment_bank_account_number') ?: '—' }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted" style="padding: 0.2rem 0;">IFSC Code</td>
+                                <td class="fw-semibold text-dark" style="padding: 0.2rem 0;">{{ \App\Models\Setting::get('payment_bank_ifsc') ?: '—' }}</td>
+                            </tr>
+                            @if (\App\Models\Setting::get('payment_upi_id'))
+                            <tr>
+                                <td class="text-muted" style="padding: 0.2rem 0;">UPI ID</td>
+                                <td class="fw-semibold text-success" style="padding: 0.2rem 0;">{{ \App\Models\Setting::get('payment_upi_id') }}</td>
+                            </tr>
+                            @endif
+                        </table>
+                    </div>
+                </div>
+
             </div>
 
             {{-- Order Summary --}}
@@ -141,17 +176,11 @@
                         @foreach ($items as $item)
                             @php $product = $item->product; @endphp
                             <div class="d-flex align-items-center gap-2 p-3 {{ !$loop->last ? 'border-bottom' : '' }}">
-                                @if ($product->image)
-                                    <img src="{{ Storage::url($product->image) }}"
-                                         alt="{{ $product->product_name }}"
-                                         class="rounded"
-                                         style="width:52px;height:52px;object-fit:cover;flex-shrink:0">
-                                @else
-                                    <div class="rounded bg-light d-flex align-items-center justify-content-center"
-                                         style="width:52px;height:52px;flex-shrink:0">
-                                        <i class="bi bi-image text-muted"></i>
-                                    </div>
-                                @endif
+                                <img src="{{ $product->image ? Storage::url($product->image) : asset('images/category.jpg') }}"
+                                     alt="{{ $product->product_name }}"
+                                     class="rounded"
+                                     style="width:52px;height:52px;object-fit:cover;flex-shrink:0"
+                                     loading="lazy">
 
                                 <div class="flex-grow-1 min-w-0">
                                     <div class="fw-semibold small text-truncate">{{ $product->product_name }}</div>
