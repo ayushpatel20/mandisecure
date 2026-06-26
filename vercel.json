@@ -11,15 +11,23 @@
       "dest": "/public/build/$1"
     },
     {
+      "src": "/storage/(.*)",
+      "dest": "/public/storage/$1"
+    },
+    {
+      "src": "/(.*\\.(css|js|png|jpg|jpeg|gif|svg|ico|webp|woff|woff2|ttf|eot|otf|txt|xml|json|map))",
+      "dest": "/public/$1"
+    },
+    {
       "src": "/(.*)",
       "dest": "/api/index.php"
     }
   ],
-  "outputDirectory": "public",
   "env": {
+    "APP_URL": "https://mandisecure.vercel.app",
     "APP_KEY": "base64:zHTdPALrij7TnPNY/IRWpBRMeMdGIg7ZckzMWYZpf9Y=",
     "APP_ENV": "production",
-    "APP_DEBUG": "true",
+    "APP_DEBUG": "false",
     "APP_SERVICES_CACHE": "/tmp/services.php",
     "APP_PACKAGES_CACHE": "/tmp/packages.php",
     "APP_CONFIG_CACHE": "/tmp/config.php",
@@ -27,6 +35,8 @@
     "VIEW_COMPILED_PATH": "/tmp",
     "CACHE_DRIVER": "array",
     "SESSION_DRIVER": "cookie",
-    "LOG_CHANNEL": "stderr"
+    "LOG_CHANNEL": "stderr",
+    "FILESYSTEM_DISK": "public",
+    "DB_CONNECTION": "mysql"
   }
 }

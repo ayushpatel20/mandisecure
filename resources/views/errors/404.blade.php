@@ -133,25 +133,6 @@
         <div style="margin-top:2rem;font-size:0.8rem;color:rgba(255,255,255,0.3)">
             Need help? <a href="/contact" style="color:rgba(232,160,32,0.7);text-decoration:none">Contact Us</a>
         </div>
-        @if(request()->has('debug'))
-        <div class="mt-4 p-3 text-start rounded text-monospace" style="font-size:0.75rem; color:#00ff00; background: #111; max-width:600px; margin:2rem auto 0; border:1px solid #00ff00; text-align: left; font-family: monospace; white-space: pre-wrap; word-break: break-all;">
-            <strong>Debug Routing Info:</strong><br>
-            Request URI: {{ $_SERVER['REQUEST_URI'] ?? 'N/A' }}<br>
-            Script Name: {{ $_SERVER['SCRIPT_NAME'] ?? 'N/A' }}<br>
-            PHP Self: {{ $_SERVER['PHP_SELF'] ?? 'N/A' }}<br>
-            Path Info: {{ $_SERVER['PATH_INFO'] ?? 'N/A' }}<br>
-            Laravel Path: {{ request()->path() }}<br>
-            Laravel URL: {{ request()->url() }}<br>
-            Laravel Base URL: {{ request()->getBaseUrl() }}<br>
-            Vercel Env: {{ getenv('VERCEL') ? 'Yes' : 'No' }}<br><br>
-            <strong>$_SERVER Keys:</strong><br>
-            @foreach($_SERVER as $key => $val)
-                @if(!in_array($key, ['APP_KEY', 'DB_PASSWORD', 'MAIL_PASSWORD', 'TWILIO_TOKEN']))
-                    {{ $key }}: {{ is_array($val) ? json_encode($val) : $val }}<br>
-                @endif
-            @endforeach
-        </div>
-        @endif
 
     </div>
 

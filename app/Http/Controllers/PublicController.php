@@ -15,25 +15,38 @@ class PublicController extends Controller
 {
     public function home()
     {
-        $categories = Category::where('status', true)
-            ->withCount(['products as approved_count' => fn ($q) => $q->where('status', 'approved')])
-            ->get();
+        try {
+            $categories = Category::where('status', true)
+                ->withCount(['products as approved_count' => fn ($q) => $q->where('status', 'approved')])
+                ->get();
 
-        $featuredProducts = Product::approved()
-            ->with(['category', 'seller'])
-            ->latest()
-            ->take(8)
-            ->get();
+            $featuredProducts = Product::approved()
+                ->with(['category', 'seller'])
+                ->latest()
+                ->take(8)
+                ->get();
 
-        $stats = [
-            'products'   => Product::approved()->count(),
-            'sellers'    => User::where('role', 'seller')->where('status', 'active')->count(),
-            'buyers'     => User::where('role', 'buyer')->where('status', 'active')->count(),
-            'categories' => Category::where('status', true)->count(),
-        ];
+            $stats = [
+                'products'   => Product::approved()->count(),
+                'sellers'    => User::where('role', 'seller')->where('status', 'active')->count(),
+                'buyers'     => User::where('role', 'buyer')->where('status', 'active')->count(),
+                'categories' => Category::where('status', true)->count(),
+            ];
+        } catch (\Throwable $e) {
+            Log::error('Home page DB error: ' . $e->getMessage());
+            $categories      = collect();
+            $featuredProducts = collect();
+            $stats = [
+                'products'   => 0,
+                'sellers'    => 0,
+                'buyers'     => 0,
+                'categories' => 0,
+            ];
+        }
 
         return view('public.home', compact('categories', 'featuredProducts', 'stats'));
     }
+
 
     public function about()
     {
