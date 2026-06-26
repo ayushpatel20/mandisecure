@@ -5,6 +5,22 @@ use Illuminate\Http\Request;
 
 define('LARAVEL_START', microtime(true));
 
+// ── Debug Server Variables ───────────────────────────────────────────────────
+if (
+    (isset($_SERVER['REQUEST_URI']) && str_contains($_SERVER['REQUEST_URI'], 'debug_server')) ||
+    (isset($_SERVER['QUERY_STRING']) && str_contains($_SERVER['QUERY_STRING'], 'debug_server')) ||
+    isset($_GET['debug_server'])
+) {
+    header('Content-Type: application/json');
+    echo json_encode([
+        'source' => 'public/index.php',
+        '_SERVER' => $_SERVER,
+        '_GET' => $_GET,
+        '_ENV' => $_ENV
+    ], JSON_PRETTY_PRINT);
+    exit;
+}
+
 /*
 |--------------------------------------------------------------------------
 | Check If The Application Is Under Maintenance
