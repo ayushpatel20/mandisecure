@@ -52,8 +52,22 @@ Route::get('/language/{locale}', function (string $locale) {
     ]);
 })->where('locale', 'en|hi|kn|ta')->name('language.switch');
 
+// Ping / health check (zero deps — tests raw routing on Vercel)
+Route::get('/ping', function () {
+    return response()->json([
+        'status'      => 'ok',
+        'php'         => PHP_VERSION,
+        'laravel'     => app()->version(),
+        'path'        => request()->path(),
+        'script_name' => $_SERVER['SCRIPT_NAME'] ?? 'n/a',
+        'request_uri' => $_SERVER['REQUEST_URI'] ?? 'n/a',
+        'vercel'      => getenv('VERCEL') ? true : false,
+    ]);
+});
+
 // Public website (no auth required)
 Route::get('/',               [PublicController::class, 'home'])->name('public.home');
+
 Route::get('/about',          [PublicController::class, 'about'])->name('public.about');
 Route::get('/contact',        [PublicController::class, 'contact'])->name('public.contact');
 Route::post('/contact',       [PublicController::class, 'contactSend'])->name('public.contact.send')->middleware('throttle:5,10');
