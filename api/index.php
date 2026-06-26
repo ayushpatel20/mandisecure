@@ -45,5 +45,16 @@ if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROT
     $_SERVER['HTTPS'] = 'on';
 }
 
+// ── Debug Server Variables ───────────────────────────────────────────────────
+if (isset($_GET['debug_server'])) {
+    header('Content-Type: application/json');
+    echo json_encode([
+        '_SERVER' => $_SERVER,
+        '_GET' => $_GET,
+        '_ENV' => $_ENV
+    ], JSON_PRETTY_PRINT);
+    exit;
+}
+
 // ── Boot Laravel ──────────────────────────────────────────────────────────────
 require __DIR__ . '/../public/index.php';
